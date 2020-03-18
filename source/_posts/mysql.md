@@ -9,7 +9,7 @@ tags:
 color: rgb(230,230,250)
 cover: '../assets/blogimg/2018-10-24.png'
 ---
-# windows中安装mysql-8.0.14步骤记录
+# windows 中安装 mysql-8.0.14 步骤记录
 
 ## 下载mysql 安装包
 
