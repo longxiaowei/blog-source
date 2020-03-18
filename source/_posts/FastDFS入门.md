@@ -92,7 +92,7 @@ service fdfs_trackerd start
 netstat -unltp|grep fdfs
 ```
 
-![](/public/doc/assets/specification/env-fastdfs/tracker.jpg)
+![](/images/fastdfs/tracker.jpg)
 
 　　关闭 Tracker
 
@@ -127,7 +127,7 @@ service fdfs_storaged start
 netstat -unltp|grep fdfs
 ```
 
-![](/public/doc/assets/specification/env-fastdfs/storage.jpg)
+![](/images/fastdfs/storage.jpg)
 
  　　关闭 Storage
 
@@ -137,7 +137,7 @@ service fdfs_storaged stop
 
  　　查看Storage和Tracker是否在通信：如显示对应的 tracker 为 ACTIVE状态，则表示正常，如下图：
 
-![](/public/doc/assets/specification/env-fastdfs/storage-tracker-active.jpg)
+![](/images/fastdfs/storage-tracker-active.jpg)
 
 
 ### 文件上传测试
