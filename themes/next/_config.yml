@@ -397,24 +397,15 @@ valine:
 # You can get your uid from https://livere.com/insight/myCode (General web site)
 #livere_uid: your uid
 
-# Gitment
-# Introduction: https://imsun.net/posts/gitment-introduction/
-# You can get your Github ID from https://api.github.com/users/<Github username>
-gitment:
-  onwer: longxiaowei
+gitalk:
   enable: true
-  mint: true # RECOMMEND, A mint on Gitment, to support count, language and proxy_gateway
-  count: true # Show comments count in post meta area
-  lazy: false # Comments lazy loading with a button
-  cleanly: false # Hide 'Powered by ...' on footer, and more
-  language: # Force language, or auto switch by theme
-  github_user: longxiaowei
-  github_repo: longxiaowei.github.io
-  client_id: 5431b0eabc608f2fe7e9
-  client_secret: 064ebe3895d7759300adf5dbb806c2fe80426547
-  proxy_gateway: # Address of api proxy, See: https://github.com/aimingoo/intersect
-  redirect_protocol: # Protocol of redirect_uri with force_redirect_protocol when mint enabled
-
+  owner: longxiaowei
+  repo: blog-talk # 存放评论仓库的 仓库名字
+  clientID: 5431b0eabc608f2fe7e9
+  clientSecret: 064ebe3895d7759300adf5dbb806c2fe80426547
+  admin: longxiaowei # 用户名
+  distractionFreeMode: false # 评论时遮照效果的开关
+  id: location.pathname
 # Baidu Share
 # Available value:
 #    button | slide
