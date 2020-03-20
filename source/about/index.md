@@ -12,3 +12,5 @@ date: 2020-01-15 17:10:57
 # 博主收藏
 
 - 小可搜索 ： 强大的搜索引擎，有很多资源。[链接](http://magnet.chongbuluo.com/)
+
+- Java-guide :  优秀的 java 学习，复习，面试资料[链接](https://github.com/Snailclimb/JavaGuide)
