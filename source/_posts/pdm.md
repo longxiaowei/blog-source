@@ -5,7 +5,7 @@ date:   2019-01-29
 categories:
  - PowerDesigner
 tags:
- - mysql
+ - pdm
 color: rgb(230,230,250)
 cover: '../assets/blogimg/2018-10-24.png'
 ---
@@ -14,74 +14,94 @@ cover: '../assets/blogimg/2018-10-24.png'
 - mysql 版本：5.7
 - PowerDesigner 版本：15.2
 
+## 生成PDM
+
 首选导出建表语句，然后打开PowerDesigner， 选择文件-> 反向工程 -> database
-	
-![](/images/pdm/1.png)
 
-设置模型名称，点击确定。选择
-## 配置path环境变量
-	
-	MYSQL_HOME：mysql安装路径
-	<img src="/assets/imgages/2019/01290003.png">
-	PATH:%MYSQL_HOME%\bin
-	<img src="/assets/imgages/2019/01290004.png">
+![](/images/pdm/create.png)
 
-## 初始化服务信息
-	
-	- 在mysql安装目录下 即bin文件夹同级 新建 data文件夹和my.ini文件,my.ini内容如下，用window记事本打开保存，ANSI编码。
+设置模型名称，点击确定。点击使用脚本文件，选择对应的建表语句点击确定即可生成 pdm 文件
 
-		<pre>
-		[mysqld]
-		# 设置3306端口
-		port=3306
+![](/images/pdm/createpdm.jpg)
 
-		# 设置mysql的安装目录
-		basedir=D:/mysql-8.0.14
+## 调整模型
 
-		# 设置mysql数据库的数据的存放目录
-		datadir=D:/mysql-8.0.14/data
-		# 允许最大连接数
+在 PDM 空白处右键----->显示首选项，选择 table--->Advanced, 在弹出界面中选择 Columns, 点击 List columns对应的放大镜图标, 通过上下箭头调整列显示顺序。
 
-		max_connections=200
-		# 允许连接失败的次数。这是为了防止有人从该主机试图攻击数据库系统
-		max_connect_errors=10
-		# 服务端使用的字符集默认为UTF8
-		character-set-server=utf8
-		# 创建新表时将使用的默认存储引擎
-		default-storage-engine=INNODB
-		[mysql]
-		# 设置mysql客户端默认字符集
-		default-character-set=utf8mb4
-		[client]
-		# 设置mysql客户端连接服务端时默认使用的端口
-		port=3306
-		default-character-set=utf8
-		</pre>
+![](/images/pdm/colunms.jpg)
 
-	- 以管理员的身份打开cmd窗口 初始化服务：
+对应以下顺序，这时候的Name是和Code列一致的，都是显示列名，Name列要替换为注释
 
-	mysqld --initialize --user=mysql --console
-	
-	初始化完成之后，会生成一个临时密码,将此密码复制保存
+![](/images/pdm/colunms1.jpg)
 
-	<img src="/assets/imgages/2019/01290005.png">
+## 替换Name列为中文注释
 
-## 安装服务
+点击工具---> Execute Commands----> Edit/Run Script,执行以下脚本即可
 
-	mysqld -install
+![](/images/pdm/script.png)
 
-## 启动服务
+```
+    Option   Explicit   
+    ValidationMode   =   True   
+    InteractiveMode   =   im_Batch
+    Dim blankStr
+    blankStr   =   Space(1)
+    Dim   mdl   '   the   current   model  
+      
+    '   get   the   current   active   model   
+    Set   mdl   =   ActiveModel   
+    If   (mdl   Is   Nothing)   Then   
+          MsgBox   "There   is   no   current   Model "   
+    ElseIf   Not   mdl.IsKindOf(PdPDM.cls_Model)   Then   
+          MsgBox   "The   current   model   is   not   an   Physical   Data   model. "   
+    Else   
+          ProcessFolder   mdl   
+    End   If  
+      
+    Private   sub   ProcessFolder(folder)   
+    On Error Resume Next  
+          Dim   Tab   'running     table   
+          for   each   Tab   in   folder.tables   
+                if   not   tab.isShortcut   then   
+                      tab.name   =   tab.comment  
+                      Dim   col   '   running   column   
+                      for   each   col   in   tab.columns   
+                      if col.comment = "" or replace(col.comment," ", "")="" Then
+                            col.name = blankStr
+                            blankStr = blankStr & Space(1)
+                      else  
+                            col.name = col.comment   
+                      end if  
+                      next   
+                end   if   
+          next  
+      
+          Dim   view   'running   view   
+          for   each   view   in   folder.Views   
+                if   not   view.isShortcut   then   
+                      view.name   =   view.comment   
+                end   if   
+          next  
+      
+          '   go   into   the   sub-packages   
+          Dim   f   '   running   folder   
+          For   Each   f   In   folder.Packages   
+                if   not   f.IsShortcut   then   
+                      ProcessFolder   f   
+                end   if   
+          Next   
+    end   sub  
+```
 
-	net start mysql
+## 重新渲染PDM
+点击符号--->自动布局，选择合适的布局模型。
 
-	<img src="/assets/imgages/2019/01290006.png">
+![](/images/pdm/render.jpg)
 
-## 修改密码 
 
-	mysql -u root -p登录数据库 输入上面的临时密码
 
-	ALTER USER root@localhost IDENTIFIED  BY '123456'; 将密码为123456
 
-[jekyll-docs]: https://www.baidu.com
-[jekyll-gh]:   https://github.com/jekyll/jekyll
-[jekyll-talk]: https://talk.jekyllrb.com/
+
+
+
+
