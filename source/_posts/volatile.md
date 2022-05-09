@@ -6,7 +6,7 @@ categories:
  - j.u.c
 tags:
  - java
- - j.u.c
+ - J.U.C
  - java并发
 color: rgb(230,230,250)
 cover: '../assets/blogimg/2018-10-24.png'
