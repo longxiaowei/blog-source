@@ -18,4 +18,5 @@ cover: '../assets/blogimg/2018-10-24.png'
   - NIO
   - 集合
 - mysql
+- mq
 
