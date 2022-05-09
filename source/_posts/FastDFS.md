@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "FastDFS 入门"
+title:  "FastDFS 入门指南"
 date:   2020-03-16
 categories:
  - fastdfs
